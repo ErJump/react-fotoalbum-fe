@@ -4,7 +4,7 @@ import { faHouse, faToolbox } from '@fortawesome/free-solid-svg-icons'
 
 function SidebarComponent() {
     return (
-        <nav className="navbar navbar-expand-lg px-3 d-flex flex-column align-items-start ms_bg_darker h-100 position-fixed">
+        <nav className="col-2 ms_navbar px-3 d-flex justify-content-start flex-column align-items-start ms_bg_darker h-100 position-fixed">
             <a className="navbar-brand text-primary my-4" href="http://localhost:3000">
                 <img className="ms_logo" src={logo} alt="logo"></img>
             </a>

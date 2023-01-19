@@ -3,13 +3,18 @@ $lightcolor: #fafafa;
 $maincolor: #008de8;
 $darkaccenturecolor: #444444;
 
+/* app */
 .ms_app{
     background-color: $darkcolor;
+    overflow-x: hidden;
+}
+
+div.col-10{
+    margin-left: 16.66666667%;
 }
 
 /* sidebar */
-
-nav.navbar{
+nav.ms_navbar{
     background-color: $darkcolor;
     border-right: 2px solid $darkaccenturecolor;
     *{

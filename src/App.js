@@ -3,11 +3,9 @@ import './style/main.scss';
 
 function App() {
   return (
-    <div className='ms_app'>
+    <div className='ms_app container-fluid'>
       <div className="row">
-        <div className="col-2">
-          <SidebarComponent/>
-        </div>
+        <SidebarComponent/>
         <div className="col-10">
           <h1>React Fotoalbum</h1>
         </div>
