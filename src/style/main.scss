@@ -1,3 +1,33 @@
 $darkcolor: #000000;
 $lightcolor: #fafafa;
 $maincolor: #008de8;
+$darkaccenturecolor: #444444;
+
+.ms_app{
+    background-color: $darkcolor;
+}
+
+/* sidebar */
+
+nav.navbar{
+    background-color: $darkcolor;
+    border-right: 2px solid $darkaccenturecolor;
+    *{
+        color: $lightcolor;
+    }
+}
+
+.ms_navlink{
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: .5s ease;
+    &:hover{
+        color: $lightcolor;
+        background-color: $darkaccenturecolor;
+    }
+}
+
+.ms_logo{
+    height: 40px;
+    filter: invert(99%) sepia(0%) saturate(0%) hue-rotate(305deg) brightness(200%) contrast(96%);
+}
