@@ -1,4 +1,5 @@
 import SidebarComponent from './components/SidebarComponent.jsx';
+import HomeComponent from './components/HomeComponent.jsx'
 import './style/main.scss';
 
 function App() {
@@ -6,9 +7,7 @@ function App() {
     <div className='ms_app container-fluid'>
       <div className="row">
         <SidebarComponent/>
-        <div className="col-10">
-          <h1>React Fotoalbum</h1>
-        </div>
+        <HomeComponent/>
       </div>
     </div>
   );
