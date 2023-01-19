@@ -13,6 +13,7 @@ function HomeComponent() {
     const [categories, setCategories] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const [comments, setComments] = useState([]);
+    const [userComment, setUserComment] = useState("");
 
     //il campo data viene rinominato in pictures
     const { data: pictures, isLoading, error } = useApiCall(API_URL + "/pictures" , "get");
@@ -35,6 +36,20 @@ function HomeComponent() {
                 console.error(error);
             });
     }, []);
+
+    const handleCommentPost = useCallback((id) => {
+        if(userComment.trim() === '') return;
+        const newComment = {text: userComment};
+
+      axios.post(API_URL + '/comments/add/' + id , newComment)
+        .then(response => {
+            setComments([...comments, response.data]);
+            setUserComment('');
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    })
     
     return (
         <div className="col-10 pt-4">
@@ -67,8 +82,13 @@ function HomeComponent() {
                                                     <div className="w-100 text-white px-3">
                                                         <strong className="d-inline-block mb-2"> Commenti:</strong>
                                                             <div className="d-flex align-items-center mb-2">
-                                                            <input type="text" className="form-control" placeholder="Inserisci un commento"/>
-                                                            <button className="btn btn-success"><FontAwesomeIcon icon={faPaperPlane} /></button>
+                                                            <input type="text" className="form-control" placeholder="Inserisci un commento" value={userComment} 
+                                                            onChange={
+                                                                (event) => {
+                                                                    setUserComment(event.target.value);
+                                                                }
+                                                            } />
+                                                            <button className="btn btn-success"><FontAwesomeIcon icon={faPaperPlane} onClick={() => handleCommentPost(picture.id)}/></button>
                                                         </div>
                                                         <ul>
                                                             {
