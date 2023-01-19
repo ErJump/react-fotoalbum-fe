@@ -36,3 +36,19 @@ nav.ms_navbar{
     height: 40px;
     filter: invert(99%) sepia(0%) saturate(0%) hue-rotate(305deg) brightness(200%) contrast(96%);
 }
+
+/* home */
+.ms_container{
+    width: 50%;
+    margin: 0 auto;
+}
+
+p.card-text{
+    font-size: 1.2rem;
+    color: $darkcolor;
+}
+
+.ms_comment{
+    font-size: 1.2rem;
+    color: $darkcolor;
+}
