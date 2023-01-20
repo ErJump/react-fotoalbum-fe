@@ -41,20 +41,47 @@ function HomeComponent() {
         if(userComment.trim() === '') return;
         const newComment = {text: userComment};
 
-      axios.post(API_URL + '/comments/add/' + id , newComment)
-        .then(response => {
-            setComments([...comments, response.data]);
-            setUserComment('');
-        })
-        .catch(error => {
-          console.log(error);
-        });
+        axios.post(API_URL + '/comments/add/' + id , newComment)
+            .then(response => {
+                setComments([...comments, response.data]);
+                setUserComment('');
+            })
+            .catch(error => {
+            console.log(error);
+            });
     })
     
     return (
         <div className="col-10 pt-4">
             <div className="ms_container">
-                <div className="row">
+                <div className="row" >
+                    {
+                        isLoading && (
+                            <div className="col-12 text-center ms_100_vh">
+                                <div className="spinner-border text-primary" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        )
+                    }
+                    {
+                        error && (
+                            <div className="col-12 text-center">
+                                <div className="alert alert-danger" role="alert">
+                                    {error}
+                                </div>
+                            </div>
+                        )
+                    }
+                    {
+                        pictures?.length === 0 && (
+                            <div className="col-12 text-center">
+                                <div className="alert alert-warning" role="alert">
+                                    Nessuna immagine presente
+                                </div>
+                            </div>
+                        )
+                    }
                     {pictures?.map(picture => (
                         picture.visible && (
                             <div key={picture.id} onClick={() => handlePictureClick(picture.id)} className="p-3 col-12">
