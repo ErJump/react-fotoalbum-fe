@@ -37,7 +37,15 @@ function HomeComponent() {
             });
     }, []);
 
+    const onKeyUpEnter = (e) => {
+        if(e.key === 'Enter') {
+            handleCommentPost(activeIndex);
+        }
+    }
+
     const handleCommentPost = useCallback((id) => {
+        //creo un evento che si attiva quando l'utente clicca sul pulsante di invio
+
         if(userComment.trim() === '') return;
         const newComment = {text: userComment};
 
@@ -84,48 +92,50 @@ function HomeComponent() {
                     }
                     {pictures?.map(picture => (
                         picture.visible && (
-                            <div key={picture.id} onClick={() => handlePictureClick(picture.id)} className="p-3 col-12">
-                                <div className="card px-0 ms_bg_light_dark text-white h-100" >
+                            <div key={picture.id} onClick={() => handlePictureClick(picture.id)} className="p-3 col-12 mb-3 ms_border_b">
+                                <div className="card rounded-0 px-0 ms_bg_transparent text-white h-100">
                                     <div>
-                                        <img className="card-img-top img-fluid" src={picture.url} alt="Card"/>
-                                        <div className="card-body">
-                                        <div className="d-flex justify-content-between">
-                                            <h5 className="card-title text-primary">{picture.title}</h5>
-                                            <span className="bg-primary rounded text-white p-2 mb-3 d-inline-block">{picture.tag}</span>
-                                        </div>
-                                            <p className="card-text"><strong>Descrizione: </strong> {picture.description}</p>
+                                        <img className="card-img-top ms_img_gallery rounded-0" src={picture.url} alt="Card"/>
+                                        <div className="card-body px-0">
+                                            <div className="d-flex justify-content-between">
+                                                <h5 className="card-title text-primary">{picture.title}</h5>
+                                                <span className="bg-primary rounded ms_light_color p-2 mb-3 d-inline-block">{picture.tag}</span>
+                                            </div>
+                                            <p className="card-text ms_light_color"><strong>Descrizione: </strong> {picture.description}</p>
                                         </div>
                                         {
                                             activeIndex === picture.id && (
                                                 <div className="pb-3">
-                                                    <div className="w-100 text-white px-3 mb-3">
+                                                    <div className="w-100 text-white px-0 mb-3">
                                                         <strong className="ms_comment">Categorie: </strong>
                                                         {
                                                             categories?.map(category => (
-                                                                <span key={category.id} className="d-inline-block me-1 text-primary" ># {category.name} </span>
+                                                                <span key={category.id} className="d-inline-block me-1 text-primary" >#{category.name} </span>
                                                             ))
                                                         }
                                                     </div>
-                                                    <div className="w-100 text-white px-3">
-                                                        <strong className="d-inline-block mb-2"> Commenti:</strong>
+                                                    <div className="w-100 text-white px-0">
+                                                        <strong className="d-inline-block mb-2">Commenti:</strong>
+                                                            <ul className="ms_ul">
+                                                                {
+                                                                    comments?.map(comment => (
+                                                                        <li key={comment.id} className="mb-2 ms_comment">
+                                                                            <span>{comment.text}</span>
+                                                                        </li>
+                                                                    ))
+                                                                }   
+                                                            </ul>
                                                             <div className="d-flex align-items-center mb-2">
-                                                            <input type="text" className="form-control" placeholder="Inserisci un commento" value={userComment} 
+                                                            <input type="text" className=" ms_input_text" placeholder="Inserisci un commento" value={userComment} 
                                                             onChange={
                                                                 (event) => {
                                                                     setUserComment(event.target.value);
                                                                 }
-                                                            } />
-                                                            <button className="btn btn-success"><FontAwesomeIcon icon={faPaperPlane} onClick={() => handleCommentPost(picture.id)}/></button>
+                                                            } 
+                                                            onKeyUp={onKeyUpEnter}
+                                                            />
+                                                            {/* <button className="btn btn-success"><FontAwesomeIcon icon={faPaperPlane} onClick={() => handleCommentPost(picture.id)}/></button> */}
                                                         </div>
-                                                        <ul>
-                                                            {
-                                                                comments?.map(comment => (
-                                                                    <li key={comment.id} className="mb-2 ms_comment">
-                                                                        <span>{comment.text}</span>
-                                                                    </li>
-                                                                ))
-                                                            }   
-                                                        </ul>
                                                     </div>
                                                 </div>
                                             ) 

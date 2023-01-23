@@ -3,6 +3,23 @@ $lightcolor: #fafafa;
 $maincolor: #008de8;
 $darkaccenturecolor: #444444;
 
+/* general */
+.ms_bg_transparent{
+    background-color: transparent !important;
+}
+
+.ms_border_b{
+    border-bottom: 1px solid $darkaccenturecolor;
+}
+
+.ms_light_color{
+    color: $lightcolor;
+}
+
+.ms_ul{
+    margin: 0;
+}
+
 /* app */
 .ms_app{
     background-color: $darkcolor;
@@ -46,7 +63,6 @@ nav.ms_navbar{
     font-size: 2rem;
 }
 
-//media query per md
 @media (min-width: 768px) {
     .ms_icon{
         font-size: 1rem;
@@ -55,20 +71,38 @@ nav.ms_navbar{
 
 /* home */
 .ms_container{
-    width: 50%;
+    width: 90%;
     margin: 0 auto;
 }
 
-p.card-text{
-    font-size: 1.2rem;
-    color: $darkcolor;
+.ms_img_gallery{
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
 }
 
-.ms_comment{
-    font-size: 1.2rem;
-    color: $darkcolor;
+
+@media (min-width: 992px) {
+    .ms_container{
+        width: 30%;
+    }
+
+    .ms_img_gallery{
+        height: 500px;
+    }
 }
 
 .ms_100_vh{
     height: 100vh;
+}
+
+.ms_input_text{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid $darkaccenturecolor;
+    color: $lightcolor;
+    width: 100%;
+    &:focus{
+        outline: none;
+    }
 }
