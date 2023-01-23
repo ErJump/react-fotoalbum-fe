@@ -16,14 +16,23 @@ $darkaccenturecolor: #444444;
     color: $lightcolor;
 }
 
+.ms_main_color{
+    color: $maincolor;
+}
+
 .ms_ul{
     margin: 0;
+}
+
+.ms_cursor_pointer{
+    cursor: pointer;
 }
 
 /* app */
 .ms_app{
     background-color: $darkcolor;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
 div.col-10{

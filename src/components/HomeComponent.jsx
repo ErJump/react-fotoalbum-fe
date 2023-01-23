@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useApiCall } from "../hooks/useApiCall";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 
 const API_URL = "http://localhost:8080/api/1";
@@ -14,10 +14,14 @@ function HomeComponent() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState("");
+    const [filter, setFilter] = useState("");
+    const [filteredPictures, setFilteredPictures] = useState([]);
 
-    //il campo data viene rinominato in pictures
     const { data: pictures, isLoading, error } = useApiCall(API_URL + "/pictures" , "get");
 
+    useEffect(() => {
+        setFilteredPictures(pictures);
+    }, [pictures]);
 
     const handlePictureClick = useCallback((id) => {
         setActiveIndex(id);
@@ -44,7 +48,6 @@ function HomeComponent() {
     }
 
     const handleCommentPost = useCallback((id) => {
-        //creo un evento che si attiva quando l'utente clicca sul pulsante di invio
 
         if(userComment.trim() === '') return;
         const newComment = {text: userComment};
@@ -57,12 +60,32 @@ function HomeComponent() {
             .catch(error => {
             console.log(error);
             });
-    })
+    }, [userComment, comments]);
+
+    const handleFilter = useCallback((filter) => {
+        
+        if(filter.trim() === '') setFilteredPictures(pictures);
+
+        setFilteredPictures(pictures.filter(picture => picture.title.toLowerCase().includes(filter.toLowerCase())));
+    }, [pictures]);
     
     return (
         <div className="col-10 pt-4">
             <div className="ms_container">
                 <div className="row" >
+                    <div className="col-12 d-flex mb-2 pt-4">
+                        <div className="row">
+                            <div className="col-12 mb-3">
+                                <h1 className="ms_main_color">Galleria</h1>
+                            </div>
+                            <div className="col-12 d-flex align-items-center">
+                                <input type="text" placeholder="Ricerca per titolo" className="ms_input_text" value={filter} 
+                                    onChange={(e) => setFilter(e.target.value)}
+                                />
+                                <FontAwesomeIcon className="ms_light_color" icon={faMagnifyingGlass} onClick={() => handleFilter(filter)} />
+                            </div>
+                        </div>
+                    </div>
                     {
                         isLoading && (
                             <div className="col-12 text-center ms_100_vh">
@@ -90,9 +113,9 @@ function HomeComponent() {
                             </div>
                         )
                     }
-                    {pictures?.map(picture => (
+                    { filteredPictures?.map(picture => (
                         picture.visible && (
-                            <div key={picture.id} onClick={() => handlePictureClick(picture.id)} className="p-3 col-12 mb-3 ms_border_b">
+                            <div key={picture.id} onClick={() => handlePictureClick(picture.id)} className={"p-3 col-12 mb-3 ms_border_b ms_cursor_pointer" }>
                                 <div className="card rounded-0 px-0 ms_bg_transparent text-white h-100">
                                     <div>
                                         <img className="card-img-top ms_img_gallery rounded-0" src={picture.url} alt="Card"/>
@@ -134,7 +157,6 @@ function HomeComponent() {
                                                             } 
                                                             onKeyUp={onKeyUpEnter}
                                                             />
-                                                            {/* <button className="btn btn-success"><FontAwesomeIcon icon={faPaperPlane} onClick={() => handleCommentPost(picture.id)}/></button> */}
                                                         </div>
                                                     </div>
                                                 </div>
